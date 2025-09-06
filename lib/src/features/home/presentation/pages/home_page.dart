@@ -1,6 +1,7 @@
 import 'package:applab/src/core/routing/routes.dart';
 import 'package:applab/src/core/theme/app_colors.dart';
 import 'package:applab/src/core/theme/app_text_styles.dart';
+import 'package:applab/src/shared/app_background.dart';
 import 'package:applab/src/shared/auth_buttons.dart';
 import 'package:applab/src/shared/feature_slide.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,8 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: const Color(0xFF003579),
-      body: SafeArea(
+      body: AppBackground(
+        child: SafeArea(
         child: Column(
           children: [
             const SizedBox(height: 40),
@@ -69,7 +71,7 @@ class HomePage extends ConsumerWidget {
             ),
           ],
         ),
-      ),
+      ),)
 
     );
   }
