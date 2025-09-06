@@ -10,6 +10,11 @@ class  AppTextStyles {
     color: AppColors.primary,
   );
  
+ static const TextStyle headline2 = TextStyle(
+    fontSize: 24,
+    fontWeight: FontWeight.bold,
+    color: AppColors.white,
+  );
 
   static const TextStyle bodyText = TextStyle(
     fontSize: 16,

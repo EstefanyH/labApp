@@ -1,3 +1,4 @@
+import 'package:applab/src/core/routing/routes.dart';
 import 'package:applab/src/core/theme/app_colors.dart';
 import 'package:applab/src/core/theme/app_text_styles.dart';
 import 'package:applab/src/shared/auth_buttons.dart';
@@ -5,6 +6,7 @@ import 'package:applab/src/shared/feature_slide.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -59,6 +61,7 @@ class HomePage extends ConsumerWidget {
             AuthButtons(
               onLogin: () {
                 // aquí navegas a login
+                context.push(AppRouter.login);
               },
               onRegister: () {
                 // aquí navegas a registro
