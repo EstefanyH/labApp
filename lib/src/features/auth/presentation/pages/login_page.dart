@@ -1,3 +1,4 @@
+import 'package:applab/src/core/routing/routes.dart';
 import 'package:applab/src/core/theme/app_colors.dart';
 import 'package:applab/src/core/theme/app_text_styles.dart';
 import 'package:applab/src/shared/app_background.dart';
@@ -5,6 +6,7 @@ import 'package:applab/src/shared/auth_buttons.dart';
 import 'package:applab/src/shared/customTextField.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 final passwordVisibleProvider = StateProvider<bool>((ref) => false);
 
@@ -22,7 +24,7 @@ class LoginPage extends ConsumerWidget {
               padding: EdgeInsets.fromLTRB(0, 20.0, 0, 20.0),
               child: Column(
                 children: [
-                  // 🔹 Parte superior (contenido centrado)
+                  
                   Expanded(
                     child: Padding(
                       padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
@@ -30,7 +32,10 @@ class LoginPage extends ConsumerWidget {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text('¡Hola de nuevo!', style: AppTextStyles.headline2),
+
+                          Image.asset('assets/images/logo.png', width: 50, height: 50),
+                          SizedBox(height: 10,),
+                          Text('¡Hola! Tu salud te espera.', style: AppTextStyles.headline2),
                           const SizedBox(height: 30),
 
                           CustomTextField(
@@ -58,7 +63,7 @@ class LoginPage extends ConsumerWidget {
                     children: [
                       AuthButtons(
                         onLogin: () {
-                          //context.push(AppRouter.login);
+                          context.push(AppRouter.search);
                         },
                         onRegister: () {
                           //context.push(AppRouter.register);
@@ -73,7 +78,7 @@ class LoginPage extends ConsumerWidget {
                   ),
                 ],
               ),),
-          ),// 👉 aquí va tu contenido
+          ),
       ),
       
     );

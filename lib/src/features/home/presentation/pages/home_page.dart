@@ -22,7 +22,6 @@ class HomePage extends ConsumerWidget {
           children: [
             const SizedBox(height: 40),
 
-            // Logo + título
             Image.asset('assets/images/logo.png', width: 100, height: 100),
             const SizedBox(height: 16),
             Text(
@@ -62,7 +61,6 @@ class HomePage extends ConsumerWidget {
             // Botones
             AuthButtons(
               onLogin: () {
-                // aquí navegas a login
                 context.push(AppRouter.login);
               },
               onRegister: () {
