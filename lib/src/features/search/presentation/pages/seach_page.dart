@@ -1,4 +1,5 @@
 import 'package:applab/src/core/domain/entities/laboratory.dart';
+import 'package:applab/src/core/routing/routes.dart';
 import 'package:applab/src/core/theme/app_colors.dart';
 import 'package:applab/src/core/theme/app_text_styles.dart';
 import 'package:applab/src/features/search/presentation/search_notifier.dart';
@@ -6,6 +7,7 @@ import 'package:applab/src/shared/lab_card.dart';
 import 'package:applab/src/shared/search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class SearchPage extends ConsumerWidget {
   const SearchPage({super.key});
@@ -34,10 +36,7 @@ class SearchPage extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.person, color: AppColors.primary,), // 👈 botón de usuario
             onPressed: () {
-              // Acción del botón usuario
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("Usuario presionado")),
-              );
+              context.push(AppRouter.account);
             },
           ),
         ],),
@@ -55,7 +54,7 @@ class SearchPage extends ConsumerWidget {
               child: state.when(
                 data: (labs) => labs.isEmpty ? 
                   const Center(child: Text('No se encontraron resultados'),) : 
-                  ListView.builder( 
+                  ListView.separated( 
                     itemCount: labs.length,
                     itemBuilder: (ctx, i) {
                       final Laboratory lab = labs[i];
@@ -67,7 +66,10 @@ class SearchPage extends ConsumerWidget {
                         price: lab.Price, 
                         onTap: () {  },
                       );
-                    },), 
+                    },
+                    separatorBuilder: (ctx, i) => SizedBox(height: 10,)
+                  ), 
+                  
                 error: (err, _) => Center(child: Text("Error: $err"),), 
                 loading: () => const Center(
                   child: CircularProgressIndicator(color: AppColors.primary,),

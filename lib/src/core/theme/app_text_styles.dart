@@ -16,6 +16,12 @@ class  AppTextStyles {
     color: AppColors.white,
   );
 
+  static const TextStyle headline3 = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: AppColors.primary,
+  );
+
   static const TextStyle bodyText = TextStyle(
     fontSize: 16,
     color: AppColors.textPrimary,

@@ -1,4 +1,5 @@
 import 'package:applab/src/core/theme/app_colors.dart';
+import 'package:applab/src/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class LabCard extends StatelessWidget {
@@ -20,30 +21,70 @@ class LabCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      
-      child: ListTile(
-        leading: const Icon(Icons.medical_information, color: AppColors.primary),
-        title: Text(
-          title,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-        ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(district,
-                style: const TextStyle(fontSize: 14, color: Colors.black87)),
-            const SizedBox(height: 4),
-            Text(
-              address,
-              style: const TextStyle(fontSize: 12, color: Colors.black54),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ],
-        ),
-        onTap: onTap,
+    return Container(
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Color(0xFF7993b9), // Fondo azul claro
+        borderRadius: BorderRadius.circular(8),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1), // Color de la sombra
+            blurRadius: 6, // Difuminado
+            offset: Offset(0, 3), // Desplazamiento
+          ),
+        ],
       ),
-    ); 
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: AppTextStyles.headline3,
+                      softWrap: true,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                    ),
+                    Text('$district, $kilometer'),
+                    Text(address),
+                  ],
+                ),
+              ),
+              SizedBox(width: 10),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Image.asset('assets/icons/hospital.png', width: 30, height: 30),
+                  Text(price, style: AppTextStyles.bodyText),
+                ],
+              ),
+            ],
+          ),
+
+          SizedBox(height: 10), 
+
+          Align(
+            alignment: Alignment.centerRight,
+            child: GestureDetector(
+              onTap: onTap,
+              child: Text(
+                'Ver detalle',
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ),
+          
+        ],
+      ),
+    );
+
   }
 }
