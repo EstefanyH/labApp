@@ -1,3 +1,4 @@
+import 'package:applab/src/core/providers/providers.dart';
 import 'package:applab/src/core/routing/routes.dart';
 import 'package:applab/src/core/theme/app_colors.dart';
 import 'package:applab/src/core/theme/app_text_styles.dart';
@@ -9,13 +10,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 final passwordVisibleProvider = StateProvider<bool>((ref) => false);
-
-class LoginPage extends ConsumerWidget {
+class LoginPage extends ConsumerStatefulWidget{
   const LoginPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends ConsumerState<LoginPage> {
+  
+  @override
+  Widget build(BuildContext context) {
+    final authState = ref.watch(authControllerProvider);
     final isPasswordVisible = ref.watch(passwordVisibleProvider);
+    final _userController = TextEditingController();
+    final _passController = TextEditingController();
 
     return Scaffold(
       body: AppBackground(
@@ -39,6 +48,7 @@ class LoginPage extends ConsumerWidget {
                           const SizedBox(height: 30),
 
                           CustomTextField(
+                            controller: _userController,
                             label: "Usuario",
                             hint: "Usuario",
                             suffixIcon: Icons.person, // 👤 ícono derecha
@@ -46,6 +56,7 @@ class LoginPage extends ConsumerWidget {
                           const SizedBox(height: 16),
 
                           CustomTextField(
+                            controller: _passController,
                             label: "Contraseña",
                             hint: "Contraseña",
                             suffixIcon: isPasswordVisible
@@ -63,7 +74,10 @@ class LoginPage extends ConsumerWidget {
                     children: [
                       AuthButtons(
                         onLogin: () {
-                          context.push(AppRouter.search);
+                          //context.push(AppRouter.search);
+                          ref.read(authControllerProvider.notifier)
+                          .login(_userController.text, _passController.text);
+                        
                         },
                         onRegister: () {
                           //context.push(AppRouter.register);
