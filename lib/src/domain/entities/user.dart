@@ -18,7 +18,7 @@ class User {
     'id': id,
     'username': username,
     'password': password,
-    'idProfile': idProfile,
+    'profileId': idProfile,
   };
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -26,7 +26,7 @@ class User {
       id: json['id'],
       username: json['username'],
       password: json['password'],
-      idProfile: json['idProfile'],
+      idProfile: json['profileId'],
       token: json['token'],
     );
   }

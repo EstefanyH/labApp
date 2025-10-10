@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:applab/src/domain/usecases/login_usecase.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -41,6 +39,7 @@ class AuthController extends StateNotifier<AuthState>{
       final auth = await _loginUseCase.login(user, pass);
 
       state = state.copywith(isLoading: false, isAuthenticated: true);
+      
     }catch(e){
       state = state.copywith(isLoading: false, errorMessage: e.toString());
     }

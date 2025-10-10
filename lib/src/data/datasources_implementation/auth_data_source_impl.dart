@@ -1,4 +1,5 @@
 import 'package:applab/src/core/constants/endpoints.dart';
+import 'package:applab/src/core/utils/response_handler.dart';
 import 'package:applab/src/data/datasources/auth_data_source.dart';
 import 'package:dio/dio.dart';
 
@@ -19,17 +20,24 @@ class AuthDataSourceImpl implements AuthDataSource {
   @override
   Future<User> signIn(String username, String password) async {
     // TODO: implement signIn
-    var model = {
-      'username': username,
-      'password': password
-    };
+    //
+    try{
+      var model = {
+        'username': username,
+        'password': password
+      };
 
-    final response = await dio.post(EndPoints.signIn, data: model);
+      final response = await dio.post(EndPoints.signIn, data: model);
+      final result = ResponseHandler.handleResponse<User>
+        (response: response, fromJson: (json)=> User.fromJson(json));
 
-    if(response.statusCode == 200 || response.statusCode == 201){
-      return User.fromJson(response.data);
-    } else {
-      throw Exception('Login failed: ${response.statusCode}');
+        if(result.success && result.data != null){
+          return result.data!;
+        } else {
+          throw Exception(result.message ?? 'Login failed');
+        }
+    } catch(ex){
+      throw ResponseHandler.handleError(ex);
     }
   }
 }
