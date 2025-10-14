@@ -1,6 +1,5 @@
 import 'package:applab/src/core/providers/providers.dart';
 import 'package:applab/src/core/routing/routes.dart';
-import 'package:applab/src/core/theme/app_colors.dart';
 import 'package:applab/src/core/theme/app_text_styles.dart';
 import 'package:applab/src/shared/app_background.dart';
 import 'package:applab/src/shared/auth_buttons.dart';
@@ -25,6 +24,17 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     final isPasswordVisible = ref.watch(passwordVisibleProvider);
     final _userController = TextEditingController();
     final _passController = TextEditingController();
+
+    ref.listen(authControllerProvider, (prev, next){
+      if (next.token != null && prev?.token == null) {
+        context.push(AppRouter.search);
+      }
+      if (next.errorMessage != null && prev?.errorMessage != next.errorMessage) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(next.errorMessage!)),
+        );
+      }
+    });
 
     return Scaffold(
       body: AppBackground(
@@ -77,7 +87,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           //context.push(AppRouter.search);
                           ref.read(authControllerProvider.notifier)
                           .login(_userController.text, _passController.text);
-                        
+                         // authState.isAuthenticated 
                         },
                         onRegister: () {
                           //context.push(AppRouter.register);

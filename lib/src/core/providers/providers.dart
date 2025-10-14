@@ -1,29 +1,15 @@
 
 import 'package:applab/src/core/constants/endpoints.dart';
-import 'package:applab/src/core/domain/entities/api_response.dart';
-import 'package:applab/src/core/services/auth_service.dart';
 import 'package:applab/src/data/datasources/auth_data_source.dart';
 import 'package:applab/src/data/datasources_implementation/auth_data_source_impl.dart';
 import 'package:applab/src/data/repositories_impl/auth_repository_impl.dart';
 import 'package:applab/src/domain/repositories/auth_repositories.dart';
 import 'package:applab/src/domain/usecases/login_usecase.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../features/auth/controllers/auth_controller.dart';
-import '../http_client.dart';
-/*
-final httpClientProvider = Provider<HttpClient>((ref) {
-  return HttpClient(
-    baseUrl: EndPoints.baseUrl,
-    defaultHeaders: {
-      'Accept': 'application/json',
-    },
-    connectTimeout: EndPoints.connectTimeout,
-    receiveTimeout: EndPoints.receiveTimeout,
-  );
-}); */
+import '../../features/auth/controllers/auth_controller.dart'; 
+
 final dioProvider = Provider<Dio>((ref) {
   final dio = Dio(BaseOptions(baseUrl: EndPoints.baseUrl));
   dio.interceptors.add(LogInterceptor());
@@ -39,6 +25,6 @@ final authRepositoryProvider = Provider<AuthRepository>((ref){
   return AuthRepositoryImpl(ref.watch(authDataSource));
 });
 
-  final authControllerProvider = StateNotifierProvider<AuthController, AuthState>((ref){
-    return AuthController(ref.watch(loginUseCaseProvider));
-  });
+final authControllerProvider = StateNotifierProvider<AuthController, AuthState>((ref){
+  return AuthController(ref.watch(loginUseCaseProvider));
+});
