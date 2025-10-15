@@ -4,6 +4,7 @@ import 'package:applab/src/core/theme/app_text_styles.dart';
 import 'package:applab/src/shared/app_background.dart';
 import 'package:applab/src/shared/auth_buttons.dart';
 import 'package:applab/src/shared/customTextField.dart';
+import 'package:applab/src/shared/loading_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -36,9 +37,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       }
     });
 
-    return Scaffold(
-      body: AppBackground(
-        child: SafeArea(
+    return LoadingOverlay(
+      //body: AppBackground(
+        isLoading: authState.isLoading,
+        child: Scaffold(
+          body: AppBackground(
+            child: SafeArea(
             child:  Padding(
               padding: EdgeInsets.fromLTRB(0, 20.0, 0, 20.0),
               child: Column(
@@ -83,16 +87,18 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   Column(
                     children: [
                       AuthButtons(
-                        onLogin: () {
-                          //context.push(AppRouter.search);
-                          ref.read(authControllerProvider.notifier)
-                          .login(_userController.text, _passController.text);
-                         // authState.isAuthenticated 
-                        },
-                        onRegister: () {
-                          //context.push(AppRouter.register);
-                        },
-                      ),
+                          onLogin: authState.isLoading
+                              ? (){} 
+                              : () {
+                                  ref
+                                      .read(authControllerProvider.notifier)
+                                      .login(_userController.text,
+                                          _passController.text);
+                                },
+                          onRegister: () {
+                            //context.push(AppRouter.register);
+                          },
+                        ),
                       const SizedBox(height: 12),
                       Text(
                         '¿Olvidaste tu contraseña?',
@@ -102,9 +108,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   ),
                 ],
               ),),
-          ),
-      ),
-      
-    );
+          ),),
+        )
+      );
   }
 }
